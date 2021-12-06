@@ -48,6 +48,7 @@ public class Cita {
 	//@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate fecha;
 	
+	
 	@Column(name="hora", nullable = false)
 	private Time hora;
 	
