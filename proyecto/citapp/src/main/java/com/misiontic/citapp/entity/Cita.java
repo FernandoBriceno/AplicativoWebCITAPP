@@ -1,23 +1,33 @@
 package com.misiontic.citapp.entity;
 
 import java.sql.Time;
-import java.sql.Date;
+import java.time.LocalDate;
+//import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="citas")
 public class Cita {
 	
@@ -25,14 +35,18 @@ public class Cita {
 	@Column(name="idcita", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idCita;
-	@Column(name="idmedico", nullable = false)
-	private Long idMedico;
-	@Column(name="idUsuario", nullable = false)
-	private Long idUsuario;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idmedico", nullable=false,updatable=false,referencedColumnName="idmedico")
+	private Medico idMedico;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="idusuario", nullable=false,updatable=false,referencedColumnName="idusuario")
+	private Usuario idUsuario;
 	
 	@Column(name="fecha", nullable = false)
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-	private Date fecha;
+	//@DateTimeFormat(pattern="dd/MM/yyyy")
+	private LocalDate fecha;
 	
 	@Column(name="hora", nullable = false)
 	private Time hora;
